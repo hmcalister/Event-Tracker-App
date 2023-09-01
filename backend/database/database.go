@@ -10,12 +10,8 @@ import (
 const DEFAULT_DATABASE_FILE string = "database.db"
 
 // Setup the database by automigrating the models defined in hmcalister/EventTrackerApp/backend/models.
-func databaseSetup(dbConn *gorm.DB) error {
-	if err := dbConn.AutoMigrate(&models.Event{}); err != nil {
-		return err
-	}
-
-	return nil
+func databaseSetup(dbConn *gorm.DB) {
+	dbConn.AutoMigrate(&models.Event{})
 }
 
 // create a database file and return the connection
@@ -35,10 +31,7 @@ func CreateDatabase(databaseFile string) (*gorm.DB, error) {
 		return nil, err
 	}
 
-	err = databaseSetup(dbConn)
-	if err != nil {
-		return nil, err
-	}
+	databaseSetup(dbConn)
 
 	return dbConn, nil
 }

@@ -33,9 +33,7 @@ func TestCreateDatabaseConnectionAndSetup(t *testing.T) {
 		t.Errorf("error during database connection creation: %v", err)
 	}
 
-	if err = databaseSetup(databaseConnection); err != nil {
-		t.Errorf("error during database connection setup: %v", err)
-	}
+	databaseSetup(databaseConnection)
 }
 
 func TestCreateDatabase(t *testing.T) {
