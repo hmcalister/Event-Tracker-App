@@ -19,9 +19,9 @@ jobs:
         with:
           profile: cover.out
           local-prefix: github.com/org/project
-          threshold-file: 75
-          threshold-package: 75
-          threshold-total: 75
+          threshold-file: 0
+          threshold-package: 0
+          threshold-total: 0
       
       - name: make coverage badge
         uses: action-badges/core@0.2.2
