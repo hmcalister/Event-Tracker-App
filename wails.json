@@ -1,0 +1,13 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "EventTrackerApp",
+  "outputfilename": "EventTrackerApp",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Hayden McAlister",
+    "email": "haydenmcalister49@gmail.com"
+  }
+}
