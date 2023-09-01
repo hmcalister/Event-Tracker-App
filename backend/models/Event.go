@@ -41,3 +41,11 @@ func (event *Event) IsTriggered() bool {
 	return time.Now().After(event.TriggerTime())
 }
 
+// Set the event start time.
+// If the database connection passed is not nil the struct is also updated in the database
+func (event *Event) SetStartTime(newStartTime time.Time, databaseConnection *gorm.DB) {
+	event.StartTime = newStartTime
+	if databaseConnection != nil {
+		event.UpdateEventInDatabase(databaseConnection)
+	}
+}
