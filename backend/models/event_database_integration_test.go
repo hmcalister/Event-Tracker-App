@@ -122,11 +122,15 @@ func _TestDismissEventWithDatabase(t *testing.T) {
 	databaseConnection.AutoMigrate(&models.Event{})
 
 	for testEventIndex, testEvent := range testEventStructs {
+		oldTime := testEvent.StartTime
+
 		expectedReturnsNil := dismissEventReturnsNil[testEventIndex]
 		foundReturnsNil := testEvent.DismissEvent(databaseConnection) == nil
 		if expectedReturnsNil != foundReturnsNil {
 			t.Errorf("expected returnsNil (%#v) does not match found returnsNil (%#v) for Event struct %v (index %v)", expectedReturnsNil, foundReturnsNil, testEvent, testEventIndex)
 		}
+
+		testEvent.StartTime = oldTime
 	}
 }
 
