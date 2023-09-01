@@ -49,3 +49,12 @@ func (event *Event) SetStartTime(newStartTime time.Time, databaseConnection *gor
 		event.UpdateEventInDatabase(databaseConnection)
 	}
 }
+
+// Set the event TimeoutDuration
+func (event *Event) SetTimeoutDuration(newTimeoutDuration time.Duration, databaseConnection *gorm.DB) {
+	event.TimeoutDuration = newTimeoutDuration
+	if databaseConnection != nil {
+		event.UpdateEventInDatabase(databaseConnection)
+	}
+}
+
