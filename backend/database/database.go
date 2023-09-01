@@ -2,6 +2,7 @@ package database
 
 import (
 	"hmcalister/EventTrackerApp/backend/models"
+	"log"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
@@ -10,9 +11,10 @@ import (
 const DEFAULT_DATABASE_FILE string = "database.db"
 
 // Setup the database by automigrating the models defined in hmcalister/EventTrackerApp/backend/models.
-func databaseSetup(dbConn *gorm.DB) error {
-	dbConn.AutoMigrate(&models.Event{})
-	return nil
+func databaseSetup(dbConn *gorm.DB) {
+	if err := dbConn.AutoMigrate(&models.Event{}); err != nil {
+		log.Fatalln("Failed to migrate Event model!")
+	}
 }
 
 // create a database file and return the connection
