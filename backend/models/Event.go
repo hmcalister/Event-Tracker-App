@@ -8,6 +8,7 @@ import (
 
 type Event struct {
 	gorm.Model
+	Name            string
 	StartTime       time.Time
 	TimeoutDuration time.Duration
 	IsRecurring     bool
