@@ -1,5 +1,8 @@
 name: Go Code Coverage Test and Badge
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
 jobs:
   badge:
     runs-on: ubuntu-latest
