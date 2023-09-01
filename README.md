@@ -1,5 +1,9 @@
 # Event Tracker App
 
+[![Go Build and Go Test](https://github.com/hmcalister/Event-Tracker-App/actions/workflows/goBuildAndTest.yaml/badge.svg?branch=main)](https://github.com/hmcalister/Event-Tracker-App/actions/workflows/goBuildAndTest.yaml)
+
+![coverage](https://raw.githubusercontent.com/hmcalister/Event-Tracker-App/badges/.badges/main/coverage.svg)
+
 ## About
 
 A native application to create, track, and manage events. 
