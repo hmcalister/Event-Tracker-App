@@ -96,17 +96,20 @@ func _TestSetStartTimeWithDatabase(t *testing.T) {
 }
 
 func _TestSetTimeoutDurationWithDatabase(t *testing.T) {
+	t.Cleanup(func() { databaseConnection.Migrator().DropTable(&models.Event{}) })
+	databaseConnection.AutoMigrate(&models.Event{})
+
 	for testEventIndex, testEvent := range testEventStructs {
 		oldTimeoutDuration := testEvent.TimeoutDuration
 		newTimeoutDuration := time.Hour * time.Duration(testEventIndex+1)
 
-		testEvent.SetTimeoutDuration(newTimeoutDuration, nil)
+		testEvent.SetTimeoutDuration(newTimeoutDuration, databaseConnection)
 		if testEvent.TimeoutDuration != newTimeoutDuration {
 			t.Errorf("expected TimeoutDuration (%#v) does not match found TimeoutDuration (%#v) for Event struct (index %v)", newTimeoutDuration, oldTimeoutDuration, testEventIndex)
 		}
 
 		// Reset struct and test again
-		testEvent.SetTimeoutDuration(oldTimeoutDuration, nil)
+		testEvent.SetTimeoutDuration(oldTimeoutDuration, databaseConnection)
 		if testEvent.TimeoutDuration != oldTimeoutDuration {
 			t.Errorf("expected TimeoutDuration (%#v) does not match found TimeoutDuration (%#v) for Event struct (index %v) (during undo)", newTimeoutDuration, oldTimeoutDuration, testEventIndex)
 		}
