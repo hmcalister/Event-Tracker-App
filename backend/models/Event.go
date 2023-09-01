@@ -36,3 +36,8 @@ func (event *Event) TriggerTime() time.Time {
 	return event.StartTime.Add(event.TimeoutDuration)
 }
 
+// Check if the event is currently triggered
+func (event *Event) IsTriggered() bool {
+	return time.Now().After(event.TriggerTime())
+}
+
