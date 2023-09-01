@@ -1,8 +1,8 @@
 name: Go Code Coverage Test and Badge
-runs-on: ubuntu-latest
 on: [push]
 jobs:
   badge:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v3
