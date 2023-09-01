@@ -11,50 +11,58 @@ var TIME_NOW time.Time = time.Now()
 var testEventStructs = []*models.Event{
 	// Now with 10 Second timeout
 	{
+		Name:            "Now with 10 Second timeout",
 		StartTime:       TIME_NOW,
 		TimeoutDuration: time.Second * 10,
 	},
 
 	// Now with 10 Hour timeout
 	{
+		Name:            "Now with 10 Hour timeout",
 		StartTime:       TIME_NOW,
 		TimeoutDuration: time.Hour * 10,
 	},
 
 	// Now (minus 1 Hour) with 10 Second timeout
 	{
+		Name:            "Now (minus 1 Hour) with 10 Second timeout",
 		StartTime:       TIME_NOW.Add(-time.Hour),
 		TimeoutDuration: time.Second * 10,
 	},
 
 	// Now (minus 1 Hour) with 10 Hour timeout
 	{
+		Name:            "Now (minus 1 Hour) with 10 Hour timeout",
 		StartTime:       TIME_NOW.Add(-time.Hour),
 		TimeoutDuration: time.Hour * 10,
 	},
 
 	// UnixEpoch with 10 Second timeout
 	{
-		StartTime:       time.Unix(0, 0),
+		Name:            "UnixEpoch with 10 Second timeout",
+		StartTime:       time.UnixMicro(0),
 		TimeoutDuration: time.Second * 10,
 	},
 
 	// UnixEpoch with 10 Hour timeout
 	{
-		StartTime:       time.Unix(0, 0),
+		Name:            "UnixEpoch with 10 Hour timeout",
+		StartTime:       time.UnixMicro(0),
 		TimeoutDuration: time.Hour * 10,
 	},
 
 	// UnixEpoch with 10 Second timeout and recurring
 	{
-		StartTime:       time.Unix(0, 0),
+		Name:            "UnixEpoch with 10 Second timeout and recurring",
+		StartTime:       time.UnixMicro(0),
 		TimeoutDuration: time.Second * 10,
 		IsRecurring:     true,
 	},
 
 	// UnixEpoch with 10 Hour timeout and recurring
 	{
-		StartTime:       time.Unix(0, 0),
+		Name:            "UnixEpoch with 10 Hour timeout and recurring",
+		StartTime:       time.UnixMicro(0),
 		TimeoutDuration: time.Hour * 10,
 		IsRecurring:     true,
 	},
@@ -76,7 +84,7 @@ func TestTriggerTime(t *testing.T) {
 		expectedTriggerTime := expectedTriggerTimes[testEventIndex]
 		foundTriggerTime := testEvent.TriggerTime()
 		if expectedTriggerTime != foundTriggerTime {
-			t.Errorf("expected trigger time (%#v) does not match found trigger time (%#v) for Event struct %#v (index %v)", expectedTriggerTime, foundTriggerTime, testEvent, testEventIndex)
+			t.Errorf("expected trigger time (%#v) does not match found trigger time (%#v) for Event struct %+v (index %v)", expectedTriggerTime, foundTriggerTime, testEvent, testEventIndex)
 		}
 	}
 }
@@ -97,7 +105,7 @@ func TestIsTriggered(t *testing.T) {
 		expectedIsTriggered := expectedIsTriggeredValues[testEventIndex]
 		foundIsTriggered := testEvent.IsTriggered()
 		if expectedIsTriggered != foundIsTriggered {
-			t.Errorf("expected isTriggered (%#v) does not match found isTriggered (%#v) for Event struct %#v (index %v)", expectedIsTriggered, foundIsTriggered, testEvent, testEventIndex)
+			t.Errorf("expected isTriggered (%#v) does not match found isTriggered (%#v) for Event struct %+v (index %v)", expectedIsTriggered, foundIsTriggered, testEvent, testEventIndex)
 		}
 	}
 }
@@ -151,10 +159,12 @@ var dismissEventReturnsNil = []bool{
 
 func TestDismissEvent(t *testing.T) {
 	for testEventIndex, testEvent := range testEventStructs {
+		oldTime := testEvent.StartTime
 		expectedReturnsNil := dismissEventReturnsNil[testEventIndex]
 		foundReturnsNil := testEvent.DismissEvent(nil) == nil
 		if expectedReturnsNil != foundReturnsNil {
 			t.Errorf("expected returnsNil (%#v) does not match found returnsNil (%#v) for Event struct %v (index %v)", expectedReturnsNil, foundReturnsNil, testEvent, testEventIndex)
 		}
+		testEvent.StartTime = oldTime
 	}
 }

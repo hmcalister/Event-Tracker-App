@@ -21,6 +21,7 @@ func TestAllWithDatabase(t *testing.T) {
 	t.Run("TestDeleteEventsInDatabase", _TestDeleteEventsInDatabase)
 	t.Run("TestSetStartTimeWithDatabase", _TestSetStartTimeWithDatabase)
 	t.Run("TestSetTimeoutDurationWithDatabase", _TestSetTimeoutDurationWithDatabase)
+	t.Run("TestDismissEventWithDatabase", _TestDismissEventWithDatabase)
 
 }
 
@@ -113,6 +114,23 @@ func _TestSetTimeoutDurationWithDatabase(t *testing.T) {
 		if testEvent.TimeoutDuration != oldTimeoutDuration {
 			t.Errorf("expected TimeoutDuration (%#v) does not match found TimeoutDuration (%#v) for Event struct (index %v) (during undo)", newTimeoutDuration, oldTimeoutDuration, testEventIndex)
 		}
+	}
+}
+
+func _TestDismissEventWithDatabase(t *testing.T) {
+	t.Cleanup(func() { databaseConnection.Migrator().DropTable(&models.Event{}) })
+	databaseConnection.AutoMigrate(&models.Event{})
+
+	for testEventIndex, testEvent := range testEventStructs {
+		oldTime := testEvent.StartTime
+
+		expectedReturnsNil := dismissEventReturnsNil[testEventIndex]
+		foundReturnsNil := testEvent.DismissEvent(databaseConnection) == nil
+		if expectedReturnsNil != foundReturnsNil {
+			t.Errorf("expected returnsNil (%#v) does not match found returnsNil (%#v) for Event struct %v (index %v)", expectedReturnsNil, foundReturnsNil, testEvent, testEventIndex)
+		}
+
+		testEvent.StartTime = oldTime
 	}
 }
 
