@@ -18,3 +18,10 @@ func RegisterNewEventInDatabase(newEvent *Event, databaseConnection *gorm.DB) er
 	result := databaseConnection.Create(newEvent)
 	return result.Error
 }
+
+// Update a specific event
+func (event *Event) UpdateEventInDatabase(databaseConnection *gorm.DB) error {
+	result := databaseConnection.Save(&event)
+	return result.Error
+}
+
