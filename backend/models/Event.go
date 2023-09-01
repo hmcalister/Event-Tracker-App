@@ -25,3 +25,9 @@ func (event *Event) UpdateEventInDatabase(databaseConnection *gorm.DB) error {
 	return result.Error
 }
 
+// Delete an event
+func (event *Event) DeleteEventInDatabase(databaseConnection *gorm.DB) error {
+	result := databaseConnection.Delete(&event)
+	return result.Error
+}
+
