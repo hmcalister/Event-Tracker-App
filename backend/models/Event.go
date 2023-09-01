@@ -58,3 +58,21 @@ func (event *Event) SetTimeoutDuration(newTimeoutDuration time.Duration, databas
 	}
 }
 
+// Reset the event by setting the start time to time.Now().
+//
+// Returns the event or nil. Event is returned in the case of a recurring event. For a non-recurring event, nil is returned.
+// This allows for dismissed non-recurring events to be removed appropriately, keeping consistency with the database.
+func (event *Event) DismissEvent(databaseConnection *gorm.DB) *Event {
+	if event.IsRecurring {
+		event.StartTime = time.Now()
+		if databaseConnection != nil {
+			event.UpdateEventInDatabase(databaseConnection)
+		}
+		return event
+	} else {
+		if databaseConnection != nil {
+			event.DeleteEventInDatabase(databaseConnection)
+		}
+		return nil
+	}
+}
