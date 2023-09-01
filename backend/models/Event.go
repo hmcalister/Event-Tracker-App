@@ -13,3 +13,8 @@ type Event struct {
 	IsRecurring     bool
 }
 
+// Create a new Event
+func RegisterNewEventInDatabase(newEvent *Event, databaseConnection *gorm.DB) error {
+	result := databaseConnection.Create(newEvent)
+	return result.Error
+}
