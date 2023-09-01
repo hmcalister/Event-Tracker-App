@@ -31,3 +31,8 @@ func (event *Event) DeleteEventInDatabase(databaseConnection *gorm.DB) error {
 	return result.Error
 }
 
+// Get the time until the event trigger
+func (event *Event) TriggerTime() time.Time {
+	return event.StartTime.Add(event.TimeoutDuration)
+}
+
