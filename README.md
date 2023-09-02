@@ -6,7 +6,7 @@
 
 A native application to create, track, and manage events. 
 
-Events are stored in an sqlite database, managed and interfaced through [GORM](https://gorm.io/), an Object Relation Mapper for Golang. The native application is written in Svelte and glued together with the Golang backend using [Wails](https://wails.io/).
+Events are stored in an sqlite database, managed and interfaced through [GORM](https://gorm.io/), an Object Relation Mapper for Golang. The native application is written in Svelte (using [skeleton.dev](https://www.skeleton.dev/))and glued together with the Golang backend using [Wails](https://wails.io/).
 
 Events can be created, updated, deleted, and viewed in the app, and events that have been triggered are highlighted to show they need to be addressed.
 
