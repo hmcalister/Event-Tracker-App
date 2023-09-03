@@ -7,36 +7,30 @@
 	const MODAL_TRANSITION_DURATION = 200;
 
 	import Header from "./header.svelte";
+	}
 </script>
 
-<div class="container h-full mx-auto p-12">
 <Modal
 	transitionIn={fade}
 	transitionInParams={{ duration: MODAL_TRANSITION_DURATION }}
 	transitionOut={fade}
 	transitionOutParams={{ duration: MODAL_TRANSITION_DURATION }}
 />
+
+<div id="appContainer" class="h-full w-full p-12">
 	<Header />
 
-	<div
-		id="body"
-		class="container h-full mx-auto flex justify-center items-center pt-12"
-	>
-		<div class="space-y-5">
-			<p>Start by exploring:</p>
-			<ul>
-				<li>
-					<code class="code">/src/routes/+layout.svelte</code> - barebones
-					layout
-				</li>
-				<li>
-					<code class="code">/src/app.postcss</code> - app wide css
-				</li>
-				<li>
-					<code class="code">/src/routes/+page.svelte</code> - this page,
-					you can replace the contents
-				</li>
-			</ul>
+	<div id="body" class="h-full w-full mx-auto flex justify-center items-center pt-12">
+		<div class="space-y-5 mx-auto w-full">
+			{#await AsyncGetEventsDummyFunction()}
+				<h4>Loading Events</h4>
+			{:then _} 
+				{#each allEvents as event}
+					<Event eventData={event} />
+				{/each}
+			{:catch}
+				<h4>Could not get Events from backend!</h4>
+			{/await}
 		</div>
 	</div>
 </div>

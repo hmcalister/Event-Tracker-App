@@ -13,8 +13,8 @@
 	}
 </script>
 
-<div id="header" class="container h-full space-y-5">
-	<div class="container h-full mx-auto flex justify-start">
+<div id="header" class="h-full space-y-5">
+	<div class="h-full mx-auto flex justify-start">
 		<h1 class="h1">Event Tracker App</h1>
 		<div class="flex-grow" />
 		<!-- <h4 class="text-right">Developed by<br>Hayden McAlister</h4> -->
