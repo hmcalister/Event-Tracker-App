@@ -7,6 +7,13 @@
 	const MODAL_TRANSITION_DURATION = 200;
 
 	import Header from "./header.svelte";
+	import Event from "./event.svelte";
+	import { GetAllEvents } from "../../wailsjs/go/main/App";
+	import { models } from "../../wailsjs/go/models";
+
+	var allEvents: models.Event[] = [];
+	async function AsyncGetEventsDummyFunction() {
+		allEvents = await GetAllEvents();
 	}
 </script>
 
