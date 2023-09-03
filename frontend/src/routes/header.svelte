@@ -20,15 +20,10 @@
 		<!-- <h4 class="text-right">Developed by<br>Hayden McAlister</h4> -->
 	</div>
 
-	<div id="navDiv" class="h-full flex justify-center gap-5">
-		<button class="w-full btn variant-filled" on:click={modalDemo}
-			>New Event</button
-		>
+	<div id="navDiv" class="h-full mx-auto flex justify-center gap-5">
+		<button class="w-full btn variant-filled-primary" on:click={modalDemo}>New Event</button>
 	</div>
 </div>
 
 <style>
-	#navDiv {
-		/* border: solid 1px red; */
-	}
 </style>
