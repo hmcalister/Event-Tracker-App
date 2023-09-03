@@ -1,8 +1,21 @@
-<script>
+<script lang="ts">
+	import { Modal } from "@skeletonlabs/skeleton";
+	import { initializeStores } from "@skeletonlabs/skeleton";
+	initializeStores();
+
+	import { fade } from "svelte/transition";
+	const MODAL_TRANSITION_DURATION = 200;
+
 	import Header from "./header.svelte";
 </script>
 
 <div class="container h-full mx-auto p-12">
+<Modal
+	transitionIn={fade}
+	transitionInParams={{ duration: MODAL_TRANSITION_DURATION }}
+	transitionOut={fade}
+	transitionOutParams={{ duration: MODAL_TRANSITION_DURATION }}
+/>
 	<Header />
 
 	<div

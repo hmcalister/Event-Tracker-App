@@ -1,16 +1,6 @@
 <script lang="ts">
 	import { Modal, getModalStore } from "@skeletonlabs/skeleton";
-	import type {
-		ModalSettings,
-		ModalComponent,
-		ModalStore,
-	} from "@skeletonlabs/skeleton";
-	import { initializeStores } from "@skeletonlabs/skeleton";
-	initializeStores();
-
-	import { fade } from "svelte/transition";
-	const MODAL_TRANSITION_DURATION = 200;
-
+	import type { ModalSettings, ModalComponent, ModalStore } from "@skeletonlabs/skeleton";
 	const modalStore = getModalStore();
 
 	function modalDemo(): void {
@@ -22,13 +12,6 @@
 		modalStore.trigger(modal);
 	}
 </script>
-
-<Modal
-	transitionIn={fade}
-	transitionInParams={{ duration: MODAL_TRANSITION_DURATION }}
-	transitionOut={fade}
-	transitionOutParams={{ duration: MODAL_TRANSITION_DURATION }}
-/>
 
 <div id="header" class="container h-full space-y-5">
 	<div class="container h-full mx-auto flex justify-start">
