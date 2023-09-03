@@ -2,17 +2,34 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"hmcalister/EventTrackerApp/backend/database"
+	"hmcalister/EventTrackerApp/backend/models"
+	"log"
+
+	"gorm.io/gorm"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx                context.Context
+	databaseConnection *gorm.DB
+	allEventsList      []*models.Event
+	allEventsMap       map[uint]*models.Event
 }
 
-	return &App{}
 // InitApp creates a new App application struct
 func InitApp() *App {
+	databaseConnection, err := database.CreateDatabase(database.DEFAULT_DATABASE_FILE)
+	if err != nil {
+		log.Fatalf("error during creation of database: %v\n", err)
+	}
+
+	app := &App{
+		databaseConnection: databaseConnection,
+	}
+
+	app.allEventsList, app.allEventsMap = app.initAllEventsFromDatabase()
+	return app
 }
 
 // startup is called when the app starts. The context is saved
@@ -21,7 +38,17 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
+func (a *App) initAllEventsFromDatabase() ([]*models.Event, map[uint]*models.Event) {
+	var allEvents []*models.Event
+	a.databaseConnection.Find(&allEvents)
+
+	allEventsMap := make(map[uint]*models.Event)
+	for _, event := range allEvents {
+		allEventsMap[event.ID] = event
+	}
+	return allEvents, allEventsMap
+}
+
+func (a *App) GetAllEvents() []*models.Event {
+	return a.allEventsList
 }
