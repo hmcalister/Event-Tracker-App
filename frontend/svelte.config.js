@@ -1,19 +1,24 @@
-import adapter from '@sveltejs/adapter-auto';
-import { vitePreprocess } from '@sveltejs/kit/vite';
-
+// Change from adapter-auto to adapter-static
+import adapter from '@sveltejs/adapter-static';
+// Other imports may be present depending on your template.
+import preprocess from "svelte-preprocess";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	extensions: ['.svelte'],
-	// Consult https://kit.svelte.dev/docs/integrations#preprocessors
-	// for more information about preprocessors
-	preprocess: [ vitePreprocess()],
-	
-	kit: {
-		// adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter()
-	}
-};
+  // SvelteKit's section:
+  kit: {
+    adapter: adapter({
+      // Static needs a fallback page.
+      fallback: 'index.html'
+    })
+  },
+  // (Vite's section):
+  // Others:
+  preprocess: [
+    preprocess({
+      postcss: true,
+    }),
+  ],
+}
+
 export default config;

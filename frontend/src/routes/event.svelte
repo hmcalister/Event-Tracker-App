@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getModalStore } from "@skeletonlabs/skeleton";
-	import type { ModalSettings, ModalComponent, ModalStore } from "@skeletonlabs/skeleton";
-    import { models } from "../../wailsjs/go/models";
+	import type { ModalSettings } from "@skeletonlabs/skeleton";
+    import type { models } from "$lib/wailsjs/go/models";
 	const modalStore = getModalStore();
 
 	function modalDemo(): void {

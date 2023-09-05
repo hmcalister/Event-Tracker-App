@@ -8,8 +8,8 @@
 
 	import Header from "./header.svelte";
 	import Event from "./event.svelte";
-	import { GetAllEvents } from "../../wailsjs/go/main/App";
-	import { models } from "../../wailsjs/go/models";
+	import { GetAllEvents } from "$lib/wailsjs/go/main/App";
+	import type { models } from "$lib/wailsjs/go/models";
 
 	var allEvents: models.Event[] = [];
 	async function AsyncGetEventsDummyFunction() {
