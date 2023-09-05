@@ -36,30 +36,35 @@
 	const INTERVAL_PERIOD = 100;
 	let timeIncrementInterval = setInterval(function () {
 		if (timeDifference / nextTriggerTime >= 1) {
-			// timeDifference = 0;
 			timeDifference = nextTriggerTime;
 			clearInterval(timeIncrementInterval);
 			return;
 		}
 		timeDifference = timeDifference + INTERVAL_PERIOD;
 	}, INTERVAL_PERIOD);
+
+	$: backgroundColorClass = (timeDifference / nextTriggerTime < 1) ? 'variant-ghost' : 'variant-ghost-primary';
 </script>
 
-<div class="eventGridContainer px-5 pt-2 pb-5 h-full w-full variant-ghost rounded-lg gap-x-5 items-center">
-	<div />
+<div class="eventGridContainer px-5 pt-2 pb-5 h-full w-full {backgroundColorClass} rounded-lg gap-x-5 items-center">
+	<div>
+		{#if event.IsRecurring}
+			<img src="static/recurringIcon.svg" alt="Recurring Event" class="w-8">
+		{/if}
+	</div>
 	<div class="text-sm">Last Triggered</div>
-	<div class="text-sm">Progress</div>
-	<div class="text-sm">Recurring</div>
+	<div class="text-sm justify-self-center">Progress</div>
+	<div class="text-sm"></div>
 
 	<div>{event.Name}</div>
 	<div>{previousTriggerDate.toLocaleString()}</div>
-	<div>
+	<div class="justify-self-center">
 		<ProgressBar 
 			style="radial" 
 			thickness={20}
 			series={(100 * timeDifference) / nextTriggerTime} 
 			valueLabel=" "
-			cls="w-24 h-auto mx-auto"
+			cls="w-16 pt-5 h-auto mx-auto"
 			addBackground={false}
 			thresholds={[
 				{
@@ -73,13 +78,13 @@
 			]}
 		/>
 	</div>
-	<div>{event.IsRecurring}</div>
+	<div><button class="btn variant-filled">Dismiss</div>
 </div>
 
 <style>
 	.eventGridContainer {
 		display: grid;
 		grid-template-rows: 1fr 3fr;
-		grid-template-columns: 6fr 3fr 3fr 1fr;
+		grid-template-columns: 5fr 4fr 3fr 1fr;
 	}
 </style>
