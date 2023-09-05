@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { getModalStore } from "@skeletonlabs/skeleton";
-	import type { ModalSettings, ModalComponent, ModalStore } from "@skeletonlabs/skeleton";
+	import type { ModalSettings } from "@skeletonlabs/skeleton";
 	const modalStore = getModalStore();
 
 	function modalDemo(): void {

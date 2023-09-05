@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { Modal } from "@skeletonlabs/skeleton";
 	import { initializeStores } from "@skeletonlabs/skeleton";
+	import type { models } from "$lib/wailsjs/go/models";
 	initializeStores();
 
 	import { fade } from "svelte/transition";
 	const MODAL_TRANSITION_DURATION = 200;
 
-	import Header from "./header.svelte";
-	import Event from "./event.svelte";
-	import { GetAllEvents } from "../../wailsjs/go/main/App";
-	import { models } from "../../wailsjs/go/models";
+	import Header from "$lib/header.svelte";
+	import Event from "$lib/event.svelte";
+	import { GetAllEvents } from "$lib/wailsjs/go/main/App";
 
 	var allEvents: models.Event[] = [];
 	async function AsyncGetEventsDummyFunction() {
@@ -33,7 +33,7 @@
 				<h4>Loading Events</h4>
 			{:then _} 
 				{#each allEvents as event}
-					<Event eventData={event} />
+					<Event unparsedEventData={event} />
 				{/each}
 			{:catch}
 				<h4>Could not get Events from backend!</h4>
