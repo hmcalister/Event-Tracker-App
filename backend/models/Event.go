@@ -7,11 +7,14 @@ import (
 )
 
 type Event struct {
-	gorm.Model
-	Name            string        `json:"Name"`
-	StartTime       time.Time     `json:"StartTime" ts_type:"Date" ts_transform:"new Date(__VALUE__)"`
-	TimeoutDuration time.Duration `json:"TimeoutDuration" ts_type:"number"`
-	IsRecurring     bool          `json:"IsRecurring"`
+	ID              uint `gorm:"primaryKey" json:"ID" ts_type:"number"`
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+	DeletedAt       gorm.DeletedAt `gorm:"index"`
+	Name            string         `json:"Name"`
+	StartTime       time.Time      `json:"StartTime" ts_type:"Date" ts_transform:"new Date(__VALUE__)"`
+	TimeoutDuration time.Duration  `json:"TimeoutDuration" ts_type:"number"`
+	IsRecurring     bool           `json:"IsRecurring"`
 }
 
 // Create a new Event
