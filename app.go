@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"hmcalister/EventTrackerApp/backend/database"
 	"hmcalister/EventTrackerApp/backend/models"
 	"log"
@@ -50,5 +51,31 @@ func (a *App) initAllEventsFromDatabase() ([]*models.Event, map[uint]*models.Eve
 }
 
 func (a *App) GetAllEvents() []*models.Event {
-	return a.allEventsList
+	var allEvents []*models.Event
+	a.databaseConnection.Find(&allEvents)
+	return allEvents
+}
+
+func (a *App) CreateEvent(newEvent *models.Event) *models.Event {
+	models.RegisterNewEventInDatabase(newEvent, a.databaseConnection)
+	return newEvent
+}
+
+func (a *App) UpdateEvent(updatedEvent *models.Event) *models.Event {
+	updatedEvent.UpdateEventInDatabase(a.databaseConnection)
+	return updatedEvent
+}
+
+func (a *App) DismissEvent(event *models.Event) *models.Event {
+	dismissedEvent := event.DismissEvent(a.databaseConnection)
+	return dismissedEvent
+}
+
+func (a *App) DeleteEvent(event *models.Event) *models.Event {
+	event.IsRecurring = false
+	return a.DismissEvent(event)
+}
+
+func (a *App) PrintEventStruct(event *models.Event) {
+	fmt.Printf("%+v\n", event)
 }
